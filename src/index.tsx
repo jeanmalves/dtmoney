@@ -5,7 +5,8 @@ import { App } from './App';
 
 createServer({
   models: {
-    transaction: Model
+    transaction: Model,
+    category: Model
   },
   seeds(server) {
     server.db.loadData({
@@ -34,6 +35,20 @@ createServer({
           category: 'Dev',
           createdAt: new Date('2022-02-06 09:30:00')
         }
+      ],
+      categories: [
+        {
+          id: 1,
+          name: 'Alimentação',
+        },
+        {
+          id: 2,
+          name: 'Transporte',
+        },
+        {
+          id: 3,
+          name: 'Moradia',
+        },
       ]
     })
   },
@@ -48,6 +63,10 @@ createServer({
       const data = JSON.parse(request.requestBody);
 
       return schema.create('transaction', data);
+    });
+
+    this.get('/categories', () => {
+      return this.schema.all('category');
     });
   }
 });

@@ -1,4 +1,4 @@
-import { FormEvent, useState, useContext } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 
 import Modal from 'react-modal';
 import outcomeImg from '../../assets/outcome.svg';
@@ -6,7 +6,17 @@ import incomeImg from '../../assets/income.svg';
 import closeImg from '../../assets/close.svg';
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import { useTransactions } from '../../hooks/useTransactions';
+import { api } from '../../services/api';
+import Select from 'react-select';
 
+interface Category {
+  id: number;
+  name: string;
+}
+interface CategoryOption {
+  value: number;
+  label: string;
+}
 interface NewTransactionModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -14,11 +24,27 @@ interface NewTransactionModalProps {
 
 export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModalProps) {
   const { createTransaction } = useTransactions();
+  const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
 
   const [title, setTitle] = useState('');
-  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
+  const [categoryOptionSelected, setCategoryOptionSelected] = useState<CategoryOption | null>();
+  const [amount, setAmount] = useState(0);
   const [type, setType] = useState('deposit');
+
+
+  useEffect(() => {
+    api.get('/categories').then(response => {
+      const categories = response.data.categories.map((category: Category) => {
+        return {
+          value: category.id,
+          label: category.name
+        }
+      });
+
+      setCategoryOptions(categories);
+    });
+  }, []);
 
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
@@ -94,6 +120,14 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
           placeholder="Categoria"
           value={category}
           onChange={event => setCategory(event.target.value)}
+        />
+
+        <Select
+          placeholder="Escolha uma categoria"
+          defaultValue={categoryOptionSelected}
+          onChange={(selectedCategory) => setCategoryOptionSelected(selectedCategory)}
+          options={categoryOptions}
+          noOptionsMessage={() => "Categoria não encontrada."}
         />
 
         <button type="submit">Cadastrar</button>

@@ -65,6 +65,22 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
     onRequestClose();
   }
 
+  const customStyles = {
+
+    control: () => ({
+      margin: "1rem 0",
+      display: "flex",
+      width: "100%",
+      padding: "0 0.5rem",
+      height: "4rem",
+      alignItems: "center",
+      borderRadius: "0.25rem",
+      border: "1px solid #d7d7d7",
+      background: "#e7e9ee",
+      fontWeight: 400,
+      fontSize: "1rem"
+    })
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -128,6 +144,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
           onChange={(selectedCategory) => setCategoryOptionSelected(selectedCategory)}
           options={categoryOptions}
           noOptionsMessage={() => "Categoria não encontrada."}
+          styles={customStyles}
         />
 
         <button type="submit">Cadastrar</button>

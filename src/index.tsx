@@ -16,7 +16,10 @@ createServer({
           title: 'Compras para casa',
           type: 'withdraw',
           amount: 250,
-          category: 'Alimentação',
+          category: {
+            id: 1,
+            name: 'Alimentação',
+          },
           createdAt: new Date('2022-01-06 10:30:00')
         },
         {
@@ -24,7 +27,10 @@ createServer({
           title: 'Gasolina',
           type: 'withdraw',
           amount: 150,
-          category: 'Combustível',
+          category: {
+            id: 4,
+            name: 'Combustível'
+          },
           createdAt: new Date('2022-02-06 12:30:00')
         },
         {
@@ -32,7 +38,10 @@ createServer({
           title: 'Desenvolvimento website',
           type: 'deposit',
           amount: 5000,
-          category: 'Dev',
+          category: {
+            id: 5,
+            name: 'Dev'
+          },
           createdAt: new Date('2022-02-06 09:30:00')
         }
       ],
@@ -49,6 +58,14 @@ createServer({
           id: 3,
           name: 'Moradia',
         },
+        {
+          id: 4,
+          name: 'Combustível'
+        },
+        {
+          id: 5,
+          name: 'Dev'
+        }
       ]
     })
   },

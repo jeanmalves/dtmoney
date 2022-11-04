@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { Category } from '../components/NewTransactionModal';
 import { api } from '../services/api';
 
 interface Transaction {
@@ -6,7 +7,7 @@ interface Transaction {
   title: string;
   amount: number;
   type: string;
-  category: string;
+  category: Category;
   createdAt: string;
 }
 

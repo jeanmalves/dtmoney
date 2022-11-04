@@ -9,7 +9,7 @@ import { useTransactions } from '../../hooks/useTransactions';
 import { api } from '../../services/api';
 import Select from 'react-select';
 
-interface Category {
+export interface Category {
   id: number;
   name: string;
 }
@@ -27,7 +27,6 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
   const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
 
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
   const [categoryOptionSelected, setCategoryOptionSelected] = useState<CategoryOption | null>();
   const [amount, setAmount] = useState(0);
   const [type, setType] = useState('deposit');
@@ -49,6 +48,16 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
+    const category = {
+      id: 0,
+      name: ''
+    };
+
+    if (categoryOptionSelected) {
+      category.id = categoryOptionSelected.value
+      category.name = categoryOptionSelected.label
+    }
+
     await createTransaction({
       title,
       amount,
@@ -59,7 +68,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
     setTitle('');
     setAmount(0);
     setType('deposit');
-    setCategory('');
+    setCategoryOptionSelected(null);
 
 
     onRequestClose();
@@ -131,12 +140,6 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
             <span>Saída</span>
           </RadioBox>
         </TransactionTypeContainer>
-
-        <input
-          placeholder="Categoria"
-          value={category}
-          onChange={event => setCategory(event.target.value)}
-        />
 
         <Select
           placeholder="Escolha uma categoria"

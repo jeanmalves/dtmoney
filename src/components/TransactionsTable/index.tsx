@@ -12,6 +12,7 @@ export function TransactionTable() {
             <th>Título</th>
             <th>Valor</th>
             <th>Categoria</th>
+            <th>Forma de Pagto</th>
             <th>Data</th>
           </tr>
         </thead>
@@ -28,6 +29,10 @@ export function TransactionTable() {
                 }
               </td>
               <td>{transaction.category.name}</td>
+              <td>
+                {
+                  transaction.paymentType?.name ? transaction.paymentType.name : '--'
+                }</td>
               <td>
                 {
                   new Intl.DateTimeFormat('pt-BR').format(

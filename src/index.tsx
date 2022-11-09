@@ -6,7 +6,8 @@ import { App } from './App';
 createServer({
   models: {
     transaction: Model,
-    category: Model
+    category: Model,
+    paymentType: Model,
   },
   seeds(server) {
     server.db.loadData({
@@ -20,6 +21,10 @@ createServer({
             id: 1,
             name: 'Alimentação',
           },
+          paymentType: {
+            id: 1,
+            name: 'Cartão de alimentação'
+          },
           createdAt: new Date('2022-01-06 10:30:00')
         },
         {
@@ -30,6 +35,10 @@ createServer({
           category: {
             id: 4,
             name: 'Combustível'
+          },
+          paymentType: {
+            id: 1,
+            name: 'Dinheiro'
           },
           createdAt: new Date('2022-02-06 12:30:00')
         },
@@ -66,6 +75,36 @@ createServer({
           id: 5,
           name: 'Dev'
         }
+      ],
+      paymentTypes: [
+        {
+          id: 1,
+          name: 'Dinheiro',
+        },
+        {
+          id: 2,
+          name: 'Cartão de crédito',
+        },
+        {
+          id: 3,
+          name: 'Cartão de débito',
+        },
+        {
+          id: 4,
+          name: 'PIX',
+        },
+        {
+          id: 5,
+          name: 'Transferência bancária',
+        },
+        {
+          id: 6,
+          name: 'Cartão de alimentação',
+        },
+        {
+          id: 7,
+          name: 'Cartão de refeição',
+        },
       ]
     })
   },
@@ -84,6 +123,10 @@ createServer({
 
     this.get('/categories', () => {
       return this.schema.all('category');
+    });
+
+    this.get('/paymentTypes', () => {
+      return this.schema.all('paymentType');
     });
   }
 });

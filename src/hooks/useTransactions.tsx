@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Category } from '../components/NewTransactionModal';
+import { Taxonomy } from '../components/NewTransactionModal';
 import { api } from '../services/api';
 
 interface Transaction {
@@ -7,7 +7,8 @@ interface Transaction {
   title: string;
   amount: number;
   type: string;
-  category: Category;
+  category: Taxonomy;
+  paymentType?: Taxonomy;
   createdAt: string;
 }
 

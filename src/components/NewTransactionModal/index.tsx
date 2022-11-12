@@ -7,7 +7,7 @@ import closeImg from '../../assets/close.svg';
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import { useTransactions } from '../../hooks/useTransactions';
 import { api } from '../../services/api';
-import Select from 'react-select';
+import { Select as CustomSelect } from '../Select';
 export interface Taxonomy {
   id: number;
   name: string;
@@ -96,22 +96,6 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
     onRequestClose();
   }
 
-  const customStyles = {
-
-    control: () => ({
-      margin: "1rem 0",
-      display: "flex",
-      width: "100%",
-      padding: "0 0.5rem",
-      height: "4rem",
-      alignItems: "center",
-      borderRadius: "0.25rem",
-      border: "1px solid #d7d7d7",
-      background: "#e7e9ee",
-      fontWeight: 400,
-      fontSize: "1rem"
-    })
-  }
   return (
     <Modal
       isOpen={isOpen}
@@ -163,24 +147,20 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
           </RadioBox>
         </TransactionTypeContainer>
 
-        <Select
-          placeholder="Escolha uma categoria"
-          defaultValue={categoryOptionSelected}
-          onChange={(selectedCategory) => setCategoryOptionSelected(selectedCategory)}
+        <CustomSelect
+          placeholder='Escolha uma categoria'
           options={categoryOptions}
-          noOptionsMessage={() => "Categoria não encontrada."}
-          styles={customStyles}
+          onSelectedOption={(selectedCategory) => setCategoryOptionSelected(selectedCategory)}
+          noOptionsFoundMessage={'Categoria não encontrada.'}
         />
 
         {
           type === 'withdraw' &&
-          <Select
-            placeholder="Escolha uma forma de pagamento"
-            defaultValue={paymentTypeOptionSelected}
-            onChange={(selectedPaymentType) => setPaymentTypeOptionSelected(selectedPaymentType)}
+          <CustomSelect
+            placeholder='Escolha uma forma de pagamento'
             options={paymentTypeOptions}
-            noOptionsMessage={() => "forma de pagamento não encontrada."}
-            styles={customStyles}
+            onSelectedOption={(selectedPaymentType) => setPaymentTypeOptionSelected(selectedPaymentType)}
+            noOptionsFoundMessage={"forma de pagamento não encontrada."}
           />
         }
 
